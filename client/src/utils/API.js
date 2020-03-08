@@ -18,5 +18,11 @@ export default {
   },
   getBookInfo: function(ISBN) {
     return axios.get("https://www.googleapis.com/books/v1/volumes?q=isbn:" + ISBN);
+  },
+  loadBooks: function() {
+    return axios.get("/api/books");
+  },
+  saveBook: function(book) {
+    return axios.post("/api/book", book);
   }
 };

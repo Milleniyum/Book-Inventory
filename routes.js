@@ -51,4 +51,24 @@ router.get("/api/authorized", isAuthenticated, function (req, res) {
   res.json(req.user);
 });
 
+router.get("/api/books", function (req,res){
+  db.Book.findAll({})
+  .then(function(data){
+    res.json(data);
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+})
+
+router.post("/api/book", function(req, res) {
+  db.Book.create(req.body)
+  .then(function(data) {
+    res.json(data);
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+});
+
 module.exports = router;
