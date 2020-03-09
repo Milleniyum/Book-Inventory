@@ -52,7 +52,7 @@ router.get("/api/authorized", isAuthenticated, function (req, res) {
 });
 
 router.get("/api/books", function (req,res){
-  db.Book.findAll({})
+  db.Book.findAll({order: [["id", "ASC"]]})
   .then(function(data){
     res.json(data);
   })
