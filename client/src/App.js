@@ -128,11 +128,11 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header backgroundImage="books_splash.jpg">
-          <h1>Jamie's Book Collection</h1>
-        </Header>
-        <div className="container">
-          <Router>
+        <Router>
+          <Header backgroundImage="books_splash.jpg">
+            <h1>Jamie's Book Collection</h1>
+          </Header>
+          <div className="container">
             <Switch>
               <Route exact path="/add">
                 <React.Fragment>
@@ -154,12 +154,12 @@ class App extends Component {
                 </React.Fragment>
               </Route>
             </Switch>
+            <Books books={this.state.books} />
+          </div>
           </Router>
-          <Books books={this.state.books} />
-        </div>
       </React.Fragment>
-    )
-  }
-}
-
+        )
+      }
+    }
+    
 export default App;
