@@ -24,5 +24,14 @@ export default {
   },
   saveBook: function(book) {
     return axios.post("/api/book", book);
+  },
+  saveUnknown: function(ISBN) {
+    return axios.post("/api/unknown/" + ISBN);
+  },
+  loadUnknowns: function() {
+    return axios.get("/api/unknowns");
+  },
+  deleteUnknown: function(id) {
+    return axios.delete("/api/unknown/" + id);
   }
 };

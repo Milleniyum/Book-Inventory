@@ -71,4 +71,34 @@ router.post("/api/book", function(req, res) {
   });
 });
 
+router.get("/api/unknowns", function(req, res) {
+  db.Unknown.findAll({order: [["id", "DESC"]]})
+  .then(function(data){
+    res.json(data);
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+});
+
+router.post("/api/unknown/:isbn", function(req, res) {
+  db.Unknown.create({isbn: req.params.isbn})
+  .then(function(data) {
+    res.json(data);
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+});
+
+router.delete("/api/unknown/:id", function(req, res) {
+  db.Unknown.destroy({where: {id: req.params.id}})
+  .then(function(data) {
+    res.json(data);
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+});
+
 module.exports = router;

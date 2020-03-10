@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 import Header from "./components/Header";
 import API from "./utils/API";
-import moment from "moment";
+import Books from "./pages/books";
+import Unknown from "./pages/unknown";
 
 
 class App extends Component {
   state = {
     books: [],
+    unknowns: [],
     isbn: "",
     authorized: true
   }
@@ -15,6 +18,7 @@ class App extends Component {
   componentDidMount() {
     this.isAuthorized();
     this.loadBooks();
+    this.loadUnknowns();
   }
 
   isAuthorized = () => {
@@ -71,7 +75,8 @@ class App extends Component {
       .catch(err => {
         let audio = new Audio('error.wav');
         audio.play();
-        console.log(err)
+        console.log(err);
+        this.saveUnknown(ISBN);
       })
     this.setState({ isbn: "" });
   }
@@ -90,6 +95,26 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  saveUnknown = (ISBN) => {
+    API.saveUnknown(ISBN)
+    .then(res => {
+      return this.loadUnknowns()
+    })
+    .catch(err => console.log(err));
+  }
+
+  loadUnknowns = () => {
+    API.loadUnknowns()
+    .then(res => this.setState({unknowns: res.data}))
+    .catch(err => console.log(err));
+  }
+
+  deleteUnknown = (id) => {
+    API.deleteUnknown(id)
+    .then(res => this.loadUnknowns())
+    .catch(err => console.log(err));
+  }
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -105,45 +130,29 @@ class App extends Component {
           <h1>Jamie's Book Collection</h1>
         </Header>
         <div className="container">
-          {this.state.authorized ? (
-            <React.Fragment>
-              <br />
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Book ISBN</span>
-                </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="isbn"
-                  value={this.state.isbn}
-                  onChange={this.handleInputChange} />
-              </div>
-              <br />
-            </React.Fragment>
-          ) : ("")}
-          <table className="table table-dark">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Published</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.books.map((book, index) => (
-                <tr key={book.id}>
-                  <td>{this.state.books.length - index}</td>
-                  <td>{book.isbn}</td>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
-                  <td>{moment(book.published_date).format("M/D/YYYY")}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Router>
+            <Switch>
+              <Route exact path="/add">
+                <React.Fragment>
+                  <br />
+                  <div className="input-group">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">Book ISBN</span>
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="isbn"
+                      value={this.state.isbn}
+                      onChange={this.handleInputChange} />
+                  </div>
+                  <br />
+                  <Unknown unknowns={this.state.unknowns} deleteUnknown={this.deleteUnknown} />
+                </React.Fragment>
+              </Route>
+            </Switch>
+            <Books books={this.state.books} />
+          </Router>
         </div>
       </React.Fragment>
     )
