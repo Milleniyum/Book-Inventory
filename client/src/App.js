@@ -133,7 +133,6 @@ class App extends Component {
             <h1>Jamie's Book Collection</h1>
           </Header>
           <div className="container">
-            <Switch>
               <Route exact path="/add">
                 <React.Fragment>
                   <br />
@@ -153,13 +152,12 @@ class App extends Component {
                   <Unknown unknowns={this.state.unknowns} deleteUnknown={this.deleteUnknown} />
                 </React.Fragment>
               </Route>
-            </Switch>
             <Books books={this.state.books} />
           </div>
-          </Router>
+        </Router>
       </React.Fragment>
-        )
-      }
-    }
-    
+    )
+  }
+}
+
 export default App;
