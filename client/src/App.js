@@ -130,9 +130,7 @@ class App extends Component {
           <h1>Jamie's Book Collection</h1>
         </Header>
         <div className="container">
-          <Router>
-            <Switch>
-              <Route exact path="/add">
+        
                 <React.Fragment>
                   <br />
                   <div className="input-group">
@@ -149,10 +147,8 @@ class App extends Component {
                   <br />
                   <Unknown unknowns={this.state.unknowns} deleteUnknown={this.deleteUnknown} />
                 </React.Fragment>
-              </Route>
-            </Switch>
+             
             <Books books={this.state.books} />
-          </Router>
         </div>
       </React.Fragment>
     )
