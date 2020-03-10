@@ -12,6 +12,7 @@ class App extends Component {
     books: [],
     unknowns: [],
     isbn: "",
+    lastBook: "HTML and CSS",
     authorized: true
   }
 
@@ -66,6 +67,7 @@ class App extends Component {
             category: info.categories ? info.categories.join(";") : null,
             image_link: info.imageLinks ? info.imageLinks.thumbnail : null
           }
+          this.setState({ lastBook: info.title });
           let audio = new Audio('page_turn.wav');
           audio.play();
           this.saveBook(book);
@@ -97,22 +99,22 @@ class App extends Component {
 
   saveUnknown = (ISBN) => {
     API.saveUnknown(ISBN)
-    .then(res => {
-      return this.loadUnknowns()
-    })
-    .catch(err => console.log(err));
+      .then(res => {
+        return this.loadUnknowns()
+      })
+      .catch(err => console.log(err));
   }
 
   loadUnknowns = () => {
     API.loadUnknowns()
-    .then(res => this.setState({unknowns: res.data}))
-    .catch(err => console.log(err));
+      .then(res => this.setState({ unknowns: res.data }))
+      .catch(err => console.log(err));
   }
 
   deleteUnknown = (id) => {
     API.deleteUnknown(id)
-    .then(res => this.loadUnknowns())
-    .catch(err => console.log(err));
+      .then(res => this.loadUnknowns())
+      .catch(err => console.log(err));
   }
 
   handleInputChange = event => {
@@ -130,9 +132,12 @@ class App extends Component {
           <h1>Jamie's Book Collection</h1>
         </Header>
         <div className="container">
-        
+          <Router>
+            <Switch>
+              <Route exact path="/add">
                 <React.Fragment>
                   <br />
+                  <span><label><strong>Last Book Scanned:</strong></label> {this.state.lastBook}</span>
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Book ISBN</span>
@@ -147,8 +152,10 @@ class App extends Component {
                   <br />
                   <Unknown unknowns={this.state.unknowns} deleteUnknown={this.deleteUnknown} />
                 </React.Fragment>
-             
-            <Books books={this.state.books} />
+              </Route>
+            </Switch>
+          </Router>
+          <Books books={this.state.books} />
         </div>
       </React.Fragment>
     )
