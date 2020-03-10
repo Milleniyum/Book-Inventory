@@ -128,12 +128,10 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Router>
           <Header backgroundImage="books_splash.jpg">
             <h1>Jamie's Book Collection</h1>
           </Header>
           <div className="container">
-              <Route exact path="/add">
                 <React.Fragment>
                   <br />
                   <span><label><strong>Last Book Scanned:</strong></label> {this.state.lastBook}</span>
@@ -151,10 +149,8 @@ class App extends Component {
                   <br />
                   <Unknown unknowns={this.state.unknowns} deleteUnknown={this.deleteUnknown} />
                 </React.Fragment>
-              </Route>
             <Books books={this.state.books} />
           </div>
-        </Router>
       </React.Fragment>
     )
   }
