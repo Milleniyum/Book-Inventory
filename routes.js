@@ -1,6 +1,7 @@
 var passport = require("./config/passport");
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 const db = require("./models");
 var isAuthenticated = require("./config/middleware/isAuthenticated");
 
@@ -99,6 +100,11 @@ router.delete("/api/unknown/:id", function(req, res) {
   .catch(function(err){
     console.log(err);
   });
+});
+
+// If no API routes are hit, send the React app
+router.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 module.exports = router;
