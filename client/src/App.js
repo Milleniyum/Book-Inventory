@@ -127,31 +127,43 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
-          <Header backgroundImage="books_splash.jpg">
-            <h1>Jamie's Book Collection</h1>
-          </Header>
-          <div className="container">
-                <React.Fragment>
-                  <br />
-                  <span><label><strong>Last Book Scanned:</strong></label> {this.state.lastBook}</span>
-                  <div className="input-group">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Book ISBN</span>
-                    </div>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="isbn"
-                      value={this.state.isbn}
-                      onChange={this.handleInputChange} />
+      <Router>
+        <Header backgroundImage="books_splash.jpg">
+          <h1>Jamie's Book Collection</h1>
+        </Header>
+
+        <Switch>
+          <Route exact path="/add">
+            <div className="container">
+              <React.Fragment>
+                <br />
+                <span><label><strong>Last Book Scanned:</strong></label> {this.state.lastBook}</span>
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">Book ISBN</span>
                   </div>
-                  <br />
-                  <Unknown unknowns={this.state.unknowns} deleteUnknown={this.deleteUnknown} />
-                </React.Fragment>
-            <Books books={this.state.books} />
-          </div>
-      </React.Fragment>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="isbn"
+                    value={this.state.isbn}
+                    onChange={this.handleInputChange} />
+                </div>
+                <br />
+                <Unknown unknowns={this.state.unknowns} deleteUnknown={this.deleteUnknown} />
+              </React.Fragment>
+              <Books books={this.state.books} />
+            </div>
+
+          </Route>
+
+          <Route>
+            <div className="container">
+              <Books books={this.state.books} />
+            </div>
+          </Route>
+        </Switch>
+      </Router>
     )
   }
 }

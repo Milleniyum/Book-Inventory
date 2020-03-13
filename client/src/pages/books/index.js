@@ -8,9 +8,10 @@ function Books({ books }) {
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>ISBN</th>
                     <th>Title</th>
+                    <th>Subtitle</th>
                     <th>Author</th>
+                    <th>Category</th>
                     <th>Published</th>
                 </tr>
             </thead>
@@ -18,9 +19,11 @@ function Books({ books }) {
                 {books.map((book, index) => (
                     <tr key={book.id}>
                         <td>{books.length - index}</td>
-                        <td>{book.isbn}</td>
+                        <td><img src={book.image_link} /></td>
                         <td>{book.title}</td>
+                        <td>{book.subtitle}</td>
                         <td>{book.author}</td>
+                        <td>{book.category}</td>
                         <td>{moment(book.published_date).format("M/D/YYYY")}</td>
                     </tr>
                 ))}
