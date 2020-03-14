@@ -8,6 +8,7 @@ function Books({ books }) {
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>Image</th>
                     <th>Title</th>
                     <th>Subtitle</th>
                     <th>Author</th>
