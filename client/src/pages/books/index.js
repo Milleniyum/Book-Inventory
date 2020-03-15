@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from "moment";
+import "./style.css";
 
 function Books({ books }) {
 
@@ -20,7 +21,7 @@ function Books({ books }) {
                 {books.map((book, index) => (
                     <tr key={book.id}>
                         <td>{books.length - index}</td>
-                        <td><img src={book.image_link} /></td>
+                        <td><img id="book-image" src={book.image_link} /></td>
                         <td>{book.title}</td>
                         <td>{book.subtitle}</td>
                         <td>{book.author}</td>
